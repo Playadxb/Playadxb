@@ -1,18 +1,47 @@
 <script context="module">
 	/** @type {import('@sveltejs/kit').Load} */
 	export const load = async ({ url }) => ({ props: { url } });
+
   </script>
 
 <script>
+
 	import Footer from './Footer.svelte'
 	import PageTransition from './PageTransition.svelte'
 	import Navbar from './Navbar.svelte'
 	export let url;
 		  /** @type {import('@sveltejs/kit').Load} */
+    import { apiData } from './store.js';
 
 	export const load = async ({ url }) => ({ props: { url } });
     let isTransparent = false;
     let hideLogo = false;
+    import { onMount } from "svelte";
+    let cmsData = {
+
+    };
+    let eventDay1 ,eventDay2 ,eventDay3;
+    let eventMonth1 ,eventMonth2 ,eventMonth3;
+
+    onMount(async () => {
+        const response = await fetch(
+            'http://localhost:1338/api/events',
+            {
+                method: 'GET'
+            }
+        );
+        const data = await response.json();
+        cmsData = data.data[0].attributes;
+        eventMonth1 = cmsData.event1.slice(5,7);
+                eventDay1 = cmsData.event1.substring(8);
+                eventDay2 = cmsData.event2.substring(8);
+                eventDay3 = cmsData.event3.substring(8);
+
+        eventMonth2 = cmsData.event2.slice(5,7);
+
+        eventMonth3 = cmsData.event3.slice(5,7);
+
+    });
 
 </script>
 
@@ -29,14 +58,14 @@
             </p>
     </section>
     <section style="background-image: url('/events-1.png')" class="event-details-section h-48 lg:h-full w-screen  bg-cover flex flex-col pt-12 pb-10">
-        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">03<span
-                class="sup">/12</span></h1>
+        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">{eventDay1}<span
+                class="sup">/{eventMonth1}</span></h1>
     </section>
     <div class="px-4 h-24 w-full bg-extra-grey lg:px-32 xl:px-48 flex items-center space-x-4">
         <div class="flex flex-row justify-between w-full ">
-            <p class="flex-auto text-white text-sm lg:text-lg font-bold">03.03.2021 | 8 PM</p>
-            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg ">SUN CELEBRATIONS <i
-                    class="font-semibold">CULTURAL DANCE</i></p>
+            <p class="flex-auto text-white text-sm lg:text-lg font-bold">{cmsData.event1}</p>
+            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg "><i
+                class="font-semibold">{cmsData.eventName1} </i></p>
             <div class="flex-auto justify-end flex flex-row items-center">
                 <p class="text-dark-red text-lg pr-4">Book Now
                 </p>
@@ -49,14 +78,14 @@
         </div>
     </div>
     <section style="background-image: url('/events-2.png')" class="event-details-section h-48 lg:h-full w-screen  bg-cover flex flex-col pt-12 pb-10">
-        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">03<span
-                class="sup">/12</span></h1>
+        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">{eventDay2}<span
+                class="sup">/{eventMonth2}</span></h1>
     </section>
     <div class="px-4 h-24 w-full bg-extra-grey lg:px-32 xl:px-48 flex items-center space-x-4">
         <div class="flex flex-row justify-between w-full ">
-            <p class="flex-auto text-white text-sm lg:text-lg font-bold">03.03.2021 | 8 PM</p>
-            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg ">SUN CELEBRATIONS <i
-                    class="font-semibold">CULTURAL DANCE</i></p>
+            <p class="flex-auto text-white text-sm lg:text-lg font-bold">{cmsData.event2}</p>
+            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg "><i
+                    class="font-semibold">{cmsData.eventName2}</i></p>
             <div class="flex-auto justify-end flex flex-row items-center">
                 <p class="text-dark-red text-lg pr-4">Book Now
                 </p>
@@ -69,14 +98,14 @@
         </div>
     </div>
     <section style="background-image: url('/events-3.png')" class="event-details-section h-48 lg:h-full w-screen  bg-cover flex flex-col pt-12 pb-10">
-        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">03<span
-                class="sup">/12</span></h1>
-    </section>
+        <h1 class=" flex-1 text-dark-red font-bold capitalize text-center lg:text-7xl xl:text-8xl ">{eventDay3}<span
+            class="sup">/{eventMonth3}</span></h1>
+        </section>
     <div class="px-4 h-24 w-full bg-extra-grey lg:px-32 xl:px-48 flex items-center space-x-4">
         <div class="flex flex-row justify-between w-full ">
-            <p class="flex-auto text-white text-sm lg:text-lg font-bold">03.03.2021 | 8 PM</p>
-            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg ">SUN CELEBRATIONS <i
-                    class="font-semibold">CULTURAL DANCE</i></p>
+            <p class="flex-auto text-white text-sm lg:text-lg font-bold">{cmsData.event3}</p>
+            <p class="flex-auto justify-center text-center text-white text-sm lg:text-lg "><i
+                    class="font-semibold">{cmsData.eventName3}</i></p>
             <div class="flex-auto justify-end flex flex-row items-center">
                 <p class="text-dark-red text-lg pr-4">Book Now
                 </p>

@@ -30,6 +30,7 @@
     "@netlify/functions": "^1.0.0",
     "@types/node": "^14.18.21",
     "netlify-cli": "^10.7.1",
+    "netlify-cms-app": "^2.15.72",
     "page": "^1.11.6",
     "sirv-cli": "^2.0.0",
     "svelte-pdf-viewer": "^1.0.0",
